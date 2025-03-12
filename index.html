@@ -135,35 +135,69 @@
             position: fixed;
             bottom: 90px;
             right: 20px;
-            width: 300px;
-            max-height: 400px;
+            width: 320px;
+            max-height: 450px;
             background-color: #1a1a1a;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.7);
             overflow: hidden;
+            resize: horizontal; /* Optional: resizable on desktop */
+            max-width: 500px;
         }
         .chat-header {
             background-color: #ff3333;
-            padding: 0.5rem;
+            padding: 0.8rem;
             text-align: center;
             font-weight: bold;
+            font-size: 1.1rem;
         }
         .chat-body {
             padding: 1rem;
-            max-height: 300px;
+            max-height: 350px;
             overflow-y: auto;
         }
         .chat-message {
-            margin: 0.5rem 0;
+            margin: 0.8rem 0;
+            display: flex;
+            align-items: center;
+        }
+        .chat-message.bot {
+            justify-content: flex-start;
+        }
+        .chat-message.user {
+            justify-content: flex-end;
+        }
+        .chat-bubble {
+            padding: 0.8rem;
+            border-radius: 10px;
+            max-width: 70%;
             font-size: 0.9rem;
+        }
+        .chat-bubble.bot {
+            background-color: #333;
+            color: #fff;
+        }
+        .chat-bubble.user {
+            background-color: #ff3333;
+            color: #fff;
+        }
+        .chat-options {
+            margin: 0.5rem 0;
         }
         .chat-option {
             color: #ff3333;
             cursor: pointer;
-            text-decoration: underline;
+            display: block;
+            padding: 0.5rem;
+            transition: background-color 0.2s ease;
         }
         .chat-option:hover {
+            background-color: #2a2a2a;
             color: #ffd1d1;
+        }
+        .typing {
+            font-style: italic;
+            color: #888;
         }
 
         /* Animation Keyframes */
@@ -174,6 +208,12 @@
         @keyframes slideUp {
             from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes typing {
+            0% { content: '.'; }
+            33% { content: '..'; }
+            66% { content: '...'; }
+            100% { content: '.'; }
         }
     </style>
 </head>
@@ -224,11 +264,13 @@
     <div class="chat-window" id="chatWindow">
         <div class="chat-header">AImpact Bot</div>
         <div class="chat-body" id="chatBody">
-            <div class="chat-message">Hey! I’m here to help. What do you want to know?</div>
-            <div class="chat-message">
-                <span class="chat-option" onclick="showResponse('chatbot')">What’s the chatbot price?</span><br>
-                <span class="chat-option" onclick="showResponse('videos')">Tell me about video boosts</span><br>
-                <span class="chat-option" onclick="showResponse('contact')">How do I contact you?</span><br>
+            <div class="chat-message bot">
+                <div class="chat-bubble bot">Hey! I’m here to help. What’s up?</div>
+            </div>
+            <div class="chat-options">
+                <span class="chat-option" onclick="showResponse('chatbot')">What’s the chatbot price?</span>
+                <span class="chat-option" onclick="showResponse('videos')">Tell me about video boosts</span>
+                <span class="chat-option" onclick="showResponse('contact')">How do I contact you?</span>
                 <span class="chat-option" onclick="showResponse('demo')">Can I get a demo?</span>
             </div>
         </div>
@@ -243,27 +285,54 @@
 
         function showResponse(option) {
             const chatBody = document.getElementById('chatBody');
-            let response = '';
+            const userMessage = document.createElement('div');
+            userMessage.className = 'chat-message user';
+            userMessage.innerHTML = `<div class="chat-bubble user">${getOptionText(option)}</div>`;
+            chatBody.appendChild(userMessage);
 
+            // Show typing indicator
+            const typing = document.createElement('div');
+            typing.className = 'chat-message bot';
+            typing.innerHTML = `<div class="chat-bubble bot typing">Bot is typing...</div>`;
+            chatBody.appendChild(typing);
+            chatBody.scrollTop = chatBody.scrollHeight;
+
+            // Simulate response delay
+            setTimeout(() => {
+                chatBody.removeChild(typing);
+                let response = '';
+                switch (option) {
+                    case 'chatbot':
+                        response = 'The AI Chatbot is $300 one-time. It answers stuff like “hours?” or “menu?” 24/7, custom-built for your biz. No monthly fees!';
+                        break;
+                    case 'videos':
+                        response = 'Video Social Boost starts at $300/month for 4 videos (1/week), $600 for 8 (2/week), or $1,000 for 12 (3/week). Edited, posted, tailored for you!';
+                        break;
+                    case 'contact':
+                        response = 'Hit me up at lukemarkflying@gmail.com or +358 41 577 3415.';
+                        break;
+                    case 'demo':
+                        response = 'Sure! Email me at lukemarkflying@gmail.com to set up a demo.';
+                        break;
+                    default:
+                        response = 'Not sure what you mean. Pick an option above!';
+                }
+                const botMessage = document.createElement('div');
+                botMessage.className = 'chat-message bot';
+                botMessage.innerHTML = `<div class="chat-bubble bot">${response}</div>`;
+                chatBody.appendChild(botMessage);
+                chatBody.scrollTop = chatBody.scrollHeight;
+            }, 1000); // 1-second delay for realism
+        }
+
+        function getOptionText(option) {
             switch (option) {
-                case 'chatbot':
-                    response = 'The AI Chatbot is $300 one-time. It answers stuff like “hours?” or “menu?” 24/7, custom-built for your biz. No monthly fees!';
-                    break;
-                case 'videos':
-                    response = 'Video Social Boost starts at $300/month for 4 videos (1/week), $600 for 8 (2/week), or $1,000 for 12 (3/week). Edited, posted, tailored for you!';
-                    break;
-                case 'contact':
-                    response = 'Hit me up at lukemarkflying@gmail.com or +358 41 577 3415.';
-                    break;
-                case 'demo':
-                    response = 'Sure! Email me at lukemarkflying@gmail.com to set up a demo.';
-                    break;
-                default:
-                    response = 'Not sure what you mean. Pick an option above!';
+                case 'chatbot': return 'What’s the chatbot price?';
+                case 'videos': return 'Tell me about video boosts';
+                case 'contact': return 'How do I contact you?';
+                case 'demo': return 'Can I get a demo?';
+                default: return 'Huh?';
             }
-
-            chatBody.innerHTML += `<div class="chat-message">${response}</div>`;
-            chatBody.scrollTop = chatBody.scrollHeight; // Scroll to bottom
         }
     </script>
 </body>
