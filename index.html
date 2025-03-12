@@ -141,7 +141,7 @@
             border-radius: 15px;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.7);
             overflow: hidden;
-            resize: horizontal; /* Optional: resizable on desktop */
+            resize: horizontal;
             max-width: 500px;
         }
         .chat-header {
@@ -209,12 +209,6 @@
             from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
         }
-        @keyframes typing {
-            0% { content: '.'; }
-            33% { content: '..'; }
-            66% { content: '...'; }
-            100% { content: '.'; }
-        }
     </style>
 </head>
 <body>
@@ -272,6 +266,7 @@
                 <span class="chat-option" onclick="showResponse('videos')">Tell me about video boosts</span>
                 <span class="chat-option" onclick="showResponse('contact')">How do I contact you?</span>
                 <span class="chat-option" onclick="showResponse('demo')">Can I get a demo?</span>
+                <span class="chat-option" onclick="showResponse('live')">Live Chat Support</span>
             </div>
         </div>
     </div>
@@ -314,6 +309,9 @@
                     case 'demo':
                         response = 'Sure! Email me at lukemarkflying@gmail.com to set up a demo.';
                         break;
+                    case 'live':
+                        response = 'For live support, email me at lukemarkflying@gmail.com—I’ll get back to you fast!';
+                        break;
                     default:
                         response = 'Not sure what you mean. Pick an option above!';
                 }
@@ -321,6 +319,19 @@
                 botMessage.className = 'chat-message bot';
                 botMessage.innerHTML = `<div class="chat-bubble bot">${response}</div>`;
                 chatBody.appendChild(botMessage);
+
+                // Add the options again after the response
+                const options = document.createElement('div');
+                options.className = 'chat-options';
+                options.innerHTML = `
+                    <span class="chat-option" onclick="showResponse('chatbot')">What’s the chatbot price?</span>
+                    <span class="chat-option" onclick="showResponse('videos')">Tell me about video boosts</span>
+                    <span class="chat-option" onclick="showResponse('contact')">How do I contact you?</span>
+                    <span class="chat-option" onclick="showResponse('demo')">Can I get a demo?</span>
+                    <span class="chat-option" onclick="showResponse('live')">Live Chat Support</span>
+                `;
+                chatBody.appendChild(options);
+
                 chatBody.scrollTop = chatBody.scrollHeight;
             }, 1000); // 1-second delay for realism
         }
@@ -331,6 +342,7 @@
                 case 'videos': return 'Tell me about video boosts';
                 case 'contact': return 'How do I contact you?';
                 case 'demo': return 'Can I get a demo?';
+                case 'live': return 'Live Chat Support';
                 default: return 'Huh?';
             }
         }
