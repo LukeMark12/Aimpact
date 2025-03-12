@@ -12,6 +12,20 @@
             color: #fff;
             line-height: 1.6;
         }
+        .offer-bar {
+            position: sticky;
+            top: 0;
+            background-color: #ff3333;
+            color: #fff;
+            text-align: center;
+            padding: 0.5rem;
+            font-size: 1rem;
+            z-index: 1000;
+        }
+        .offer-bar a {
+            color: #ffd1d1;
+            text-decoration: underline;
+        }
         nav {
             background-color: #ff3333;
             padding: 1rem;
@@ -75,13 +89,13 @@
             transform: scale(1.05);
             background-color: #cc2929;
         }
-        .pricing-grid {
+        .pricing-grid, .testimonials-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 2rem;
             margin-top: 2rem;
         }
-        .pricing-item {
+        .pricing-item, .testimonial-item {
             background-color: #1a1a1a;
             padding: 1.5rem;
             border-radius: 10px;
@@ -90,15 +104,53 @@
             transform: translateY(20px);
             animation: slideUp 0.8s ease forwards;
         }
-        .pricing-item:nth-child(1) { animation-delay: 0.2s; }
-        .pricing-item:nth-child(2) { animation-delay: 0.4s; }
-        .pricing-item h3 {
+        .pricing-item:nth-child(1), .testimonial-item:nth-child(1) { animation-delay: 0.2s; }
+        .pricing-item:nth-child(2), .testimonial-item:nth-child(2) { animation-delay: 0.4s; }
+        .pricing-item h3, .testimonial-item h3 {
             color: #ff3333;
             margin: 0 0 1rem;
         }
-        .pricing-item p {
+        .pricing-item p, .testimonial-item p {
             margin: 0.5rem 0;
             font-size: 1rem;
+        }
+        .testimonial-item cite {
+            display: block;
+            font-style: italic;
+            color: #ccc;
+            margin-top: 0.5rem;
+        }
+        /* Form Styles */
+        .review-form {
+            max-width: 400px;
+            margin: 2rem auto 0;
+        }
+        .review-form input, .review-form textarea {
+            width: 100%;
+            padding: 0.8rem;
+            margin: 0.5rem 0;
+            border: 1px solid #ff3333;
+            border-radius: 5px;
+            background: #1a1a1a;
+            color: #fff;
+            font-size: 1rem;
+        }
+        .review-form textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+        .review-form button {
+            background: #ff3333;
+            color: #fff;
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background 0.3s ease;
+        }
+        .review-form button:hover {
+            background: #cc2929;
         }
         footer {
             text-align: center;
@@ -106,8 +158,6 @@
             background-color: #1a1a1a;
             font-size: 0.9rem;
         }
-
-        /* Chat Button */
         .chat-button {
             position: fixed;
             bottom: 20px;
@@ -128,8 +178,6 @@
         .chat-button:hover {
             transform: scale(1.1);
         }
-
-        /* Chat Window */
         .chat-window {
             display: none;
             position: fixed;
@@ -199,8 +247,6 @@
             font-style: italic;
             color: #888;
         }
-
-        /* Animation Keyframes */
         @keyframes fadeIn {
             from { opacity: 0; }
             to { opacity: 1; }
@@ -212,20 +258,18 @@
     </style>
 </head>
 <body>
-    <!-- Navigation -->
+    <div class="offer-bar">
+        Limited Time: Sign up by March 31st, 2025 for 20% off! <a href="mailto:lukemarkflying@gmail.com">Claim Now</a>
+    </div>
     <nav>
         <a href="#home">Home</a>
         <a href="#pricing">Pricing</a>
     </nav>
-
-    <!-- Home Section -->
     <div id="home" class="section home">
         <h1>Grow Easy with AI – Chatbots & Videos</h1>
         <p>Local Helsinki guy helping biz save time and stack cash. Custom solutions, no BS.</p>
         <a href="mailto:lukemarkflying@gmail.com" class="button">Get a Demo</a>
     </div>
-
-    <!-- Pricing Section -->
     <div id="pricing" class="section">
         <h2>Pricing</h2>
         <p>Built for your vibe—restaurants, hotels, shops.</p>
@@ -245,16 +289,31 @@
             </div>
         </div>
     </div>
-
-    <!-- Footer -->
+    <div id="testimonials" class="section">
+        <h2>What People Say</h2>
+        <p>Real results from Helsinki businesses like yours.</p>
+        <div class="testimonials-grid">
+            <div class="testimonial-item">
+                <p>“The chatbot cut my customer calls in half. Worth every penny!”</p>
+                <cite>— Mika, Helsinki Café Owner</cite>
+            </div>
+            <div class="testimonial-item">
+                <p>“Videos brought in more bookings than ever. Luke’s the real deal.”</p>
+                <cite>— Anna, Hotel Manager</cite>
+            </div>
+        </div>
+        <h3 style="font-size: 1.5rem; margin-top: 2rem;">Add Your Review</h3>
+        <form action="https://formspree.io/f/xoveqpjr" method="POST" class="review-form">
+            <input type="text" name="name" placeholder="Your Name" required>
+            <input type="text" name="business" placeholder="Your Business" required>
+            <textarea name="review" placeholder="Your Review" required></textarea>
+            <button type="submit">Submit Review</button>
+        </form>
+    </div>
     <footer>
         <p>Hit me up: lukemarkflying@gmail.com | +358 41 577 3415</p>
     </footer>
-
-    <!-- Chat Button -->
     <div class="chat-button" onclick="toggleChat()">Chat</div>
-
-    <!-- Chat Window -->
     <div class="chat-window" id="chatWindow">
         <div class="chat-header">AImpact Bot</div>
         <div class="chat-body" id="chatBody">
@@ -285,14 +344,12 @@
             userMessage.innerHTML = `<div class="chat-bubble user">${getOptionText(option)}</div>`;
             chatBody.appendChild(userMessage);
 
-            // Show typing indicator
             const typing = document.createElement('div');
             typing.className = 'chat-message bot';
             typing.innerHTML = `<div class="chat-bubble bot typing">Bot is typing...</div>`;
             chatBody.appendChild(typing);
             chatBody.scrollTop = chatBody.scrollHeight;
 
-            // Simulate response delay
             setTimeout(() => {
                 chatBody.removeChild(typing);
                 let response = '';
@@ -320,7 +377,6 @@
                 botMessage.innerHTML = `<div class="chat-bubble bot">${response}</div>`;
                 chatBody.appendChild(botMessage);
 
-                // Add the options again after the response
                 const options = document.createElement('div');
                 options.className = 'chat-options';
                 options.innerHTML = `
@@ -333,7 +389,7 @@
                 chatBody.appendChild(options);
 
                 chatBody.scrollTop = chatBody.scrollHeight;
-            }, 1000); // 1-second delay for realism
+            }, 1000);
         }
 
         function getOptionText(option) {
