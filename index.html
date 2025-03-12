@@ -23,9 +23,10 @@
             margin: 0 1rem;
             font-weight: bold;
             font-size: 1.2rem;
+            transition: color 0.3s ease;
         }
         nav a:hover {
-            color: #ccc;
+            color: #ffd1d1;
         }
         .section {
             padding: 3rem 2rem;
@@ -45,6 +46,7 @@
             font-size: 2.5rem;
             color: #ff3333;
             margin: 0;
+            animation: fadeIn 1s ease-in;
         }
         h2 {
             font-size: 2rem;
@@ -53,6 +55,9 @@
         p {
             font-size: 1.2rem;
             margin: 1rem 0;
+        }
+        .home p {
+            animation: fadeIn 1.5s ease-in;
         }
         .button {
             display: inline-block;
@@ -63,8 +68,11 @@
             font-weight: bold;
             border-radius: 5px;
             margin-top: 1rem;
+            transition: transform 0.3s ease;
+            animation: fadeIn 2s ease-in;
         }
         .button:hover {
+            transform: scale(1.05);
             background-color: #cc2929;
         }
         .pricing-grid {
@@ -78,7 +86,12 @@
             padding: 1.5rem;
             border-radius: 10px;
             text-align: left;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: slideUp 0.8s ease forwards;
         }
+        .pricing-item:nth-child(1) { animation-delay: 0.2s; }
+        .pricing-item:nth-child(2) { animation-delay: 0.4s; }
         .pricing-item h3 {
             color: #ff3333;
             margin: 0 0 1rem;
@@ -92,6 +105,75 @@
             padding: 1rem;
             background-color: #1a1a1a;
             font-size: 0.9rem;
+        }
+
+        /* Chat Button */
+        .chat-button {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 60px;
+            height: 60px;
+            background-color: #ff3333;
+            color: #fff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+        .chat-button:hover {
+            transform: scale(1.1);
+        }
+
+        /* Chat Window */
+        .chat-window {
+            display: none;
+            position: fixed;
+            bottom: 90px;
+            right: 20px;
+            width: 300px;
+            max-height: 400px;
+            background-color: #1a1a1a;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            overflow: hidden;
+        }
+        .chat-header {
+            background-color: #ff3333;
+            padding: 0.5rem;
+            text-align: center;
+            font-weight: bold;
+        }
+        .chat-body {
+            padding: 1rem;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        .chat-message {
+            margin: 0.5rem 0;
+            font-size: 0.9rem;
+        }
+        .chat-option {
+            color: #ff3333;
+            cursor: pointer;
+            text-decoration: underline;
+        }
+        .chat-option:hover {
+            color: #ffd1d1;
+        }
+
+        /* Animation Keyframes */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
     </style>
 </head>
@@ -114,14 +196,12 @@
         <h2>Pricing</h2>
         <p>Built for your vibe—restaurants, hotels, shops.</p>
         <div class="pricing-grid">
-            <!-- AI Chatbot -->
             <div class="pricing-item">
                 <h3>AI Chatbot – $300 One-Time</h3>
                 <p>Answers “hours?” or “menu?” 24/7—custom-built for your business.</p>
                 <p>Cuts your DM/call grind, keeps customers locked in.</p>
                 <p>No monthly fees, takes me a couple hours to craft.</p>
             </div>
-            <!-- Video Social Boost -->
             <div class="pricing-item">
                 <h3>Video Social Boost – $300-$1,000/Month</h3>
                 <p>$300/month: 4 videos (1/week) – edited, posted, ready to roll.</p>
@@ -136,5 +216,55 @@
     <footer>
         <p>Hit me up: lukemarkflying@gmail.com | +358 41 577 3415</p>
     </footer>
+
+    <!-- Chat Button -->
+    <div class="chat-button" onclick="toggleChat()">Chat</div>
+
+    <!-- Chat Window -->
+    <div class="chat-window" id="chatWindow">
+        <div class="chat-header">AImpact Bot</div>
+        <div class="chat-body" id="chatBody">
+            <div class="chat-message">Hey! I’m here to help. What do you want to know?</div>
+            <div class="chat-message">
+                <span class="chat-option" onclick="showResponse('chatbot')">What’s the chatbot price?</span><br>
+                <span class="chat-option" onclick="showResponse('videos')">Tell me about video boosts</span><br>
+                <span class="chat-option" onclick="showResponse('contact')">How do I contact you?</span><br>
+                <span class="chat-option" onclick="showResponse('demo')">Can I get a demo?</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript for Chatbot -->
+    <script>
+        function toggleChat() {
+            const chatWindow = document.getElementById('chatWindow');
+            chatWindow.style.display = chatWindow.style.display === 'block' ? 'none' : 'block';
+        }
+
+        function showResponse(option) {
+            const chatBody = document.getElementById('chatBody');
+            let response = '';
+
+            switch (option) {
+                case 'chatbot':
+                    response = 'The AI Chatbot is $300 one-time. It answers stuff like “hours?” or “menu?” 24/7, custom-built for your biz. No monthly fees!';
+                    break;
+                case 'videos':
+                    response = 'Video Social Boost starts at $300/month for 4 videos (1/week), $600 for 8 (2/week), or $1,000 for 12 (3/week). Edited, posted, tailored for you!';
+                    break;
+                case 'contact':
+                    response = 'Hit me up at lukemarkflying@gmail.com or +358 41 577 3415.';
+                    break;
+                case 'demo':
+                    response = 'Sure! Email me at lukemarkflying@gmail.com to set up a demo.';
+                    break;
+                default:
+                    response = 'Not sure what you mean. Pick an option above!';
+            }
+
+            chatBody.innerHTML += `<div class="chat-message">${response}</div>`;
+            chatBody.scrollTop = chatBody.scrollHeight; // Scroll to bottom
+        }
+    </script>
 </body>
 </html>
