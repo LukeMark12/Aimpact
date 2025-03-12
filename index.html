@@ -89,13 +89,18 @@
             transform: scale(1.05);
             background-color: #cc2929;
         }
-        .pricing-grid, .testimonials-grid {
+        .demo-button {
+            padding: 1.2rem 2.5rem;
+            font-size: 1.3rem;
+            animation: pulse 2s infinite;
+        }
+        .pricing-grid, .testimonials-grid, .why-ai-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 2rem;
             margin-top: 2rem;
         }
-        .pricing-item, .testimonial-item {
+        .pricing-item, .testimonial-item, .why-ai-item {
             background-color: #1a1a1a;
             padding: 1.5rem;
             border-radius: 10px;
@@ -104,13 +109,13 @@
             transform: translateY(20px);
             animation: slideUp 0.8s ease forwards;
         }
-        .pricing-item:nth-child(1), .testimonial-item:nth-child(1) { animation-delay: 0.2s; }
-        .pricing-item:nth-child(2), .testimonial-item:nth-child(2) { animation-delay: 0.4s; }
-        .pricing-item h3, .testimonial-item h3 {
+        .pricing-item:nth-child(1), .testimonial-item:nth-child(1), .why-ai-item:nth-child(1) { animation-delay: 0.2s; }
+        .pricing-item:nth-child(2), .testimonial-item:nth-child(2), .why-ai-item:nth-child(2) { animation-delay: 0.4s; }
+        .pricing-item h3, .testimonial-item h3, .why-ai-item h3 {
             color: #ff3333;
             margin: 0 0 1rem;
         }
-        .pricing-item p, .testimonial-item p {
+        .pricing-item p, .testimonial-item p, .why-ai-item p {
             margin: 0.5rem 0;
             font-size: 1rem;
         }
@@ -120,7 +125,6 @@
             color: #ccc;
             margin-top: 0.5rem;
         }
-        /* Form Styles */
         .review-form {
             max-width: 400px;
             margin: 2rem auto 0;
@@ -255,6 +259,11 @@
             from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
         }
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
     </style>
 </head>
 <body>
@@ -264,11 +273,13 @@
     <nav>
         <a href="#home">Home</a>
         <a href="#pricing">Pricing</a>
+        <a href="#why-ai">Why AI</a>
     </nav>
     <div id="home" class="section home">
         <h1>Grow Easy with AI – Chatbots & Videos</h1>
         <p>Local Helsinki guy helping biz save time and stack cash. Custom solutions, no BS.</p>
         <a href="mailto:lukemarkflying@gmail.com" class="button">Get a Demo</a>
+        <button class="button demo-button" onclick="toggleChat()">Try a Chatbot Now!</button>
     </div>
     <div id="pricing" class="section">
         <h2>Pricing</h2>
@@ -286,6 +297,21 @@
                 <p>$600/month: 8 videos (2/week) – double the heat.</p>
                 <p>$1,000/month: 12 videos (3/week) – max buzz, more sales.</p>
                 <p>Tailored clips for your brand.</p>
+            </div>
+        </div>
+    </div>
+    <!-- Why AI Works Section -->
+    <div id="why-ai" class="section">
+        <h2>Why AI Works for Your Business</h2>
+        <p>Smart tech, real results—here’s the proof.</p>
+        <div class="why-ai-grid">
+            <div class="why-ai-item">
+                <h3>Instant Answers = Happy Customers</h3>
+                <p>80% of people want quick replies. Chatbots deliver 24/7, no waiting.</p>
+            </div>
+            <div class="why-ai-item">
+                <h3>Videos Drive Buzz</h3>
+                <p>Social posts with video get 3x more engagement. We make it easy.</p>
             </div>
         </div>
     </div>
@@ -330,7 +356,6 @@
         </div>
     </div>
 
-    <!-- JavaScript for Chatbot -->
     <script>
         function toggleChat() {
             const chatWindow = document.getElementById('chatWindow');
