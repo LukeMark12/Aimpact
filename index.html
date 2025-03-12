@@ -93,6 +93,10 @@
             padding: 1.2rem 2.5rem;
             font-size: 1.3rem;
             animation: pulse 2s infinite;
+            cursor: pointer;
+        }
+        .demo-button.clicked {
+            animation: clickPulse 0.5s ease;
         }
         .pricing-grid, .testimonials-grid, .why-ai-grid {
             display: grid;
@@ -264,6 +268,11 @@
             50% { transform: scale(1.05); }
             100% { transform: scale(1); }
         }
+        @keyframes clickPulse {
+            0% { transform: scale(1); box-shadow: 0 0 0 rgba(255, 51, 51, 0); }
+            50% { transform: scale(1.15); box-shadow: 0 0 15px rgba(255, 51, 51, 0.8); }
+            100% { transform: scale(1); box-shadow: 0 0 0 rgba(255, 51, 51, 0); }
+        }
     </style>
 </head>
 <body>
@@ -279,7 +288,7 @@
         <h1>Grow Easy with AI – Chatbots & Videos</h1>
         <p>Local Helsinki guy helping biz save time and stack cash. Custom solutions, no BS.</p>
         <a href="mailto:lukemarkflying@gmail.com" class="button">Get a Demo</a>
-        <button class="button demo-button" onclick="toggleChat()">Try a Chatbot Now!</button>
+        <button class="button demo-button" id="demoButton" onclick="triggerDemoAnimation()">Try a Chatbot Now!</button>
     </div>
     <div id="pricing" class="section">
         <h2>Pricing</h2>
@@ -300,7 +309,6 @@
             </div>
         </div>
     </div>
-    <!-- Why AI Works Section -->
     <div id="why-ai" class="section">
         <h2>Why AI Works for Your Business</h2>
         <p>Smart tech, real results—here’s the proof.</p>
@@ -360,6 +368,15 @@
         function toggleChat() {
             const chatWindow = document.getElementById('chatWindow');
             chatWindow.style.display = chatWindow.style.display === 'block' ? 'none' : 'block';
+        }
+
+        function triggerDemoAnimation() {
+            const demoButton = document.getElementById('demoButton');
+            demoButton.classList.add('clicked');
+            setTimeout(() => {
+                demoButton.classList.remove('clicked');
+                toggleChat(); // Open chatbot after animation
+            }, 500); // Match animation duration (0.5s)
         }
 
         function showResponse(option) {
