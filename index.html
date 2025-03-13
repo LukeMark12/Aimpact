@@ -109,6 +109,8 @@
             padding: 1.5rem;
             border-radius: 10px;
             text-align: left;
+            opacity: ಡ
+
             opacity: 0;
             transform: translateY(20px);
             animation: slideUp 0.8s ease forwards;
@@ -292,20 +294,25 @@
     </div>
     <div id="pricing" class="section">
         <h2>Pricing</h2>
-        <p>Built for your vibe—restaurants, hotels, shops.</p>
+        <p>Built for your vibe—restaurants, shops, hotels.</p>
         <div class="pricing-grid">
             <div class="pricing-item">
-                <h3>AI Chatbot – $300 One-Time</h3>
-                <p>Answers “hours?” or “menu?” 24/7—custom-built for your business.</p>
-                <p>Cuts your DM/call grind, keeps customers locked in.</p>
-                <p>No monthly fees, takes me a couple hours to craft.</p>
+                <h3>AI Chatbot</h3>
+                <p><strong>Standard (Restaurants, Shops, etc.):</strong></p>
+                <p>$100/month – 24/7 answers (hours, menu, etc.), custom-built, fully maintained.</p>
+                <p><strong>Hotel Version:</strong></p>
+                <p>$100/month – Same deal, scales if you need more convos later.</p>
             </div>
             <div class="pricing-item">
-                <h3>Video Social Boost – $300-$1,000/Month</h3>
-                <p>$300/month: 4 videos (1/week) – edited, posted, ready to roll.</p>
-                <p>$600/month: 8 videos (2/week) – double the heat.</p>
-                <p>$1,000/month: 12 videos (3/week) – max buzz, more sales.</p>
-                <p>Tailored clips for your brand.</p>
+                <h3>Video Social Boost</h3>
+                <p><strong>Standard (Restaurants, Shops, etc.):</strong></p>
+                <p>$300/month: 4 videos (1/week) – edited, posted.</p>
+                <p>$600/month: 8 videos (2/week) – more reach.</p>
+                <p>$1,000/month: 12 videos (3/week) – max buzz.</p>
+                <p><strong>Hotel Version:</strong></p>
+                <p>$500/month: 4 videos (1/week).</p>
+                <p>$1,000/month: 8 videos (2/week).</p>
+                <p>$1,500/month: 12 videos (3/week).</p>
             </div>
         </div>
     </div>
@@ -344,9 +351,11 @@
             <button type="submit">Submit Review</button>
         </form>
     </div>
-    <footer>
-        <p>Hit me up: lukemarkflying@gmail.com | +358 41 577 3415</p>
-    </footer>
+    <footer  class="section">
+        <footer>
+            <p>Hit me up: lukemarkflying@gmail.com | +358 41 577 3415</p>
+        </footer>
+    </div>
     <div class="chat-button" onclick="toggleChat()">Chat</div>
     <div class="chat-window" id="chatWindow">
         <div class="chat-header">AImpact Bot</div>
@@ -375,8 +384,8 @@
             demoButton.classList.add('clicked');
             setTimeout(() => {
                 demoButton.classList.remove('clicked');
-                toggleChat(); // Open chatbot after animation
-            }, 500); // Match animation duration (0.5s)
+                toggleChat();
+            }, 500);
         }
 
         function showResponse(option) {
@@ -397,10 +406,10 @@
                 let response = '';
                 switch (option) {
                     case 'chatbot':
-                        response = 'The AI Chatbot is $300 one-time. It answers stuff like “hours?” or “menu?” 24/7, custom-built for your biz. No monthly fees!';
+                        response = 'The AI Chatbot is $100/month—24/7 answers, custom-built, and maintained for you. Same price for hotels!';
                         break;
                     case 'videos':
-                        response = 'Video Social Boost starts at $300/month for 4 videos (1/week), $600 for 8 (2/week), or $1,000 for 12 (3/week). Edited, posted, tailored for you!';
+                        response = 'Video Social Boost: $300-$1,000/month for standard (4-12 videos). Hotels: $500-$1,500/month. All edited and posted!';
                         break;
                     case 'contact':
                         response = 'Hit me up at lukemarkflying@gmail.com or +358 41 577 3415.';
