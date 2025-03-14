@@ -29,7 +29,9 @@
         nav {
             background-color: #ff3333;
             padding: 1rem;
-            text-align: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
         nav a {
             color: #fff;
@@ -41,6 +43,10 @@
         }
         nav a:hover {
             color: #ffd1d1;
+        }
+        .logo {
+            max-height: 50px; /* Adjust based on your logo */
+            margin-right: 2rem; /* Space between logo and nav links */
         }
         .section {
             padding: 3rem 2rem;
@@ -280,7 +286,7 @@
         Limited Time: Sign up by March 31st, 2025 for 20% off! <a href="mailto:lukemarkflying@gmail.com">Claim Now</a>
     </div>
     <nav>
-        <a href="#home">Home</a>
+        <a href="#home"><img src="notext.png" alt="ConnectAi Logo" class="logo"></a>
         <a href="#pricing">Pricing</a>
         <a href="#why-ai">Why AI</a>
     </nav>
