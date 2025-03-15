@@ -90,6 +90,7 @@
             margin-top: 1rem;
             transition: transform 0.3s ease;
             animation: fadeIn 2s ease-in;
+            cursor: pointer;
         }
         .button:hover {
             transform: scale(1.05);
@@ -99,7 +100,6 @@
             padding: 1.2rem 2.5rem;
             font-size: 1.3rem;
             animation: pulse 2s infinite;
-            cursor: pointer;
         }
         .demo-button.clicked {
             animation: clickPulse 0.5s ease;
@@ -172,6 +172,12 @@
             padding: 2rem;
             border-radius: 10px;
             margin-top: 2rem;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-in-out;
+        }
+        .policy-section.expanded {
+            max-height: 2000px; /* Large enough to fit content, adjust if needed */
         }
         .policy-section h3 {
             color: #ff3333;
@@ -377,7 +383,8 @@
     </div>
     <div id="store-policy" class="section">
         <h2>Store Policy</h2>
-        <div class="policy-section">
+        <button class="button" id="togglePolicy">Show Policy</button>
+        <div class="policy-section" id="policyContent">
             <h3>ConnectAi Store Policy – Website Version</h3>
             <p><strong>Name:</strong> ConnectAi</p>
             <p><strong>Tagline:</strong> Link Smart, Grow Easy</p>
@@ -405,7 +412,7 @@
             <ul>
                 <li>$500/month: 4 videos (1/week) – tailored for bigger buzz.</li>
                 <li>$1,000/month: 8 videos (2/week) – double the guest pull.</li>
-                <li>$1,500/month: 12 videos (3/week) – max bookings, all-in.</li>
+                <li>$1,000/month: 12 videos (3/week) – max bookings, all-in.</li>
             </ul>
             <ul>
                 <li><strong>What You Get:</strong> You send raw clips (phone’s cool), we edit and post to your socials—your approval first.</li>
@@ -575,6 +582,19 @@
                 default: return 'Huh?';
             }
         }
+
+        // Toggle Policy Animation
+        document.getElementById('togglePolicy').addEventListener('click', function() {
+            const policyContent = document.getElementById('policyContent');
+            const button = this;
+            if (policyContent.classList.contains('expanded')) {
+                policyContent.classList.remove('expanded');
+                button.textContent = 'Show Policy';
+            } else {
+                policyContent.classList.add('expanded');
+                button.textContent = 'Hide Policy';
+            }
+        });
     </script>
 </body>
 </html>
