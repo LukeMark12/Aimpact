@@ -177,7 +177,7 @@
             transition: max-height 0.5s ease-in-out;
         }
         .policy-section.expanded {
-            max-height: 2000px; /* Large enough to fit content, adjust if needed */
+            max-height: 2000px;
         }
         .policy-section h3 {
             color: #ff3333;
@@ -412,7 +412,7 @@
             <ul>
                 <li>$500/month: 4 videos (1/week) – tailored for bigger buzz.</li>
                 <li>$1,000/month: 8 videos (2/week) – double the guest pull.</li>
-                <li>$1,000/month: 12 videos (3/week) – max bookings, all-in.</li>
+                <li>$1,500/month: 12 videos (3/week) – max bookings, all-in.</li>
             </ul>
             <ul>
                 <li><strong>What You Get:</strong> You send raw clips (phone’s cool), we edit and post to your socials—your approval first.</li>
@@ -497,6 +497,7 @@
                 <span class="chat-option" onclick="showResponse('videos')">Tell me about video boosts</span>
                 <span class="chat-option" onclick="showResponse('contact')">How do I contact you?</span>
                 <span class="chat-option" onclick="showResponse('demo')">Can I get a demo?</span>
+                <span class="chat-option" onclick="showResponse('policy')">Store Policy</span>
                 <span class="chat-option" onclick="showResponse('live')">Live Chat Support</span>
             </div>
         </div>
@@ -533,25 +534,112 @@
             setTimeout(() => {
                 chatBody.removeChild(typing);
                 let response = '';
+                let optionsHTML = '';
+
                 switch (option) {
                     case 'chatbot':
                         response = 'The ConnectAi Chatbot is $100/month—24/7 answers, custom-built, and maintained for you. Same price for hotels!';
+                        optionsHTML = getDefaultOptions();
                         break;
                     case 'videos':
                         response = 'Video Social Boost: $300-$1,000/month for standard (4-12 videos). Hotels: $500-$1,500/month. All edited and posted!';
+                        optionsHTML = getDefaultOptions();
                         break;
                     case 'contact':
                         response = 'Hit me up at lukemarkflying@gmail.com or +358 41 577 3415.';
+                        optionsHTML = getDefaultOptions();
                         break;
                     case 'demo':
                         response = 'Sure! Email me at lukemarkflying@gmail.com to set up a demo.';
+                        optionsHTML = getDefaultOptions();
                         break;
                     case 'live':
                         response = 'For live support, email me at lukemarkflying@gmail.com—I’ll get back to you fast!';
+                        optionsHTML = getDefaultOptions();
+                        break;
+                    case 'policy':
+                        response = 'Which policy do you want to know about?';
+                        optionsHTML = `
+                            <span class="chat-option" onclick="showPolicy('services')">Services & Pricing</span>
+                            <span class="chat-option" onclick="showPolicy('how')">How It Works</span>
+                            <span class="chat-option" onclick="showPolicy('payment')">Payment Terms</span>
+                            <span class="chat-option" onclick="showPolicy('cancellations')">Cancellations</span>
+                            <span class="chat-option" onclick="showPolicy('refunds')">Refunds</span>
+                            <span class="chat-option" onclick="showPolicy('responsibilities')">Your Responsibilities</span>
+                            <span class="chat-option" onclick="showPolicy('commitment')">Our Commitment</span>
+                            <span class="chat-option" onclick="showPolicy('why')">Why Choose ConnectAi?</span>
+                            <span class="chat-option" onclick="showPolicy('changes')">Changes to This Policy</span>
+                            <span class="chat-option" onclick="showResponse('back')">Back to Main Menu</span>
+                        `;
                         break;
                     default:
                         response = 'Not sure what you mean. Pick an option above!';
+                        optionsHTML = getDefaultOptions();
                 }
+
+                const botMessage = document.createElement('div');
+                botMessage.className = 'chat-message bot';
+                botMessage.innerHTML = `<div class="chat-bubble bot">${response}</div>`;
+                chatBody.appendChild(botMessage);
+
+                const options = document.createElement('div');
+                options.className = 'chat-options';
+                options.innerHTML = optionsHTML;
+                chatBody.appendChild(options);
+
+                chatBody.scrollTop = chatBody.scrollHeight;
+            }, 1000);
+        }
+
+        function showPolicy(policy) {
+            const chatBody = document.getElementById('chatBody');
+            const userMessage = document.createElement('div');
+            userMessage.className = 'chat-message user';
+            userMessage.innerHTML = `<div class="chat-bubble user">${getPolicyText(policy)}</div>`;
+            chatBody.appendChild(userMessage);
+
+            const typing = document.createElement('div');
+            typing.className = 'chat-message bot';
+            typing.innerHTML = `<div class="chat-bubble bot typing">Bot is typing...</div>`;
+            chatBody.appendChild(typing);
+            chatBody.scrollTop = chatBody.scrollHeight;
+
+            setTimeout(() => {
+                chatBody.removeChild(typing);
+                let response = '';
+
+                switch (policy) {
+                    case 'services':
+                        response = '1. Services & Pricing:\n- AI Chatbot: $100/month—24/7 answers, custom-built, maintained. Same for hotels.\n- Video Social Boost:\n  Standard: $300/month (4 videos), $600/month (8 videos), $1,000/month (12 videos).\n  Hotels: $500/month (4 videos), $1,000/month (8 videos), $1,500/month (12 videos).\n  You send clips, we edit and post—billed monthly via Stripe, no hidden fees.';
+                        break;
+                    case 'how':
+                        response = '2. How It Works:\n- Chatbot: Built in 1-2 days after you send info (hours, menu, etc.), live on your site/socials.\n- Videos: Starts within 7 days—send clips, we draft, you approve, we post at peak times.\n- Free tweaks for updates (new menu, events)—just tell us!';
+                        break;
+                    case 'payment':
+                        response = '3. Payment Terms:\n- Via Stripe (USD), secure and fast.\n- Charged monthly on signup date (e.g., March 15 → April 15).\n- No surprises: $100, $300, etc. is all you pay—no setup fees or add-ons.';
+                        break;
+                    case 'cancellations':
+                        response = '4. Cancellations:\n- No lock-in—cancel anytime.\n- Email lukemarkflying@gmail.com or chanyuzhong2008@gmail.com with “cancel my [chatbot/videos].”\n- Stops at month’s end (e.g., cancel March 20, runs till March 31)—no prorated refunds.';
+                        break;
+                    case 'refunds':
+                        response = '5. Refunds:\n- No refunds after service starts (chatbot live, videos posted)—we’ll fix issues first.\n- Exception: If we can’t deliver (e.g., major tech fail), full refund, no hassle.\n- Email us—money back in 5-10 days via Stripe.';
+                        break;
+                    case 'responsibilities':
+                        response = '6. Your Responsibilities:\n- Chatbot: Send us basics (hours, menu, rates). Updates? Free, just tell us.\n- Videos: Shoot raw clips (30 secs-1 min, phone’s fine)—send via Google Drive/WhatsApp.\n- Approve video drafts quick to keep it rolling.';
+                        break;
+                    case 'commitment':
+                        response = '7. Our Commitment:\n- Custom quality—built for your biz.\n- Support: Luke or Snoopy, 24-48 hour replies, fast fixes via call/email/WhatsApp.\n- Uptime: Chatbots 24/7 (we’ll handle rare glitches), videos posted on schedule.';
+                        break;
+                    case 'why':
+                        response = '8. Why Choose ConnectAi?:\n- Local Helsinki crew (Luke + Snoopy)—no offshore nonsense.\n- Startup-friendly pricing—grow fast, stress less.\n- We handle tech/posting—you hustle.\n- See demos at aimpact-five.vercel.app.';
+                        break;
+                    case 'changes':
+                        response = '9. Changes to This Policy:\n- We might tweak prices or services as we grow—email heads-up 30 days before.\n- Current terms lock till then.';
+                        break;
+                    default:
+                        response = 'Oops, something went wrong. Try again!';
+                }
+
                 const botMessage = document.createElement('div');
                 botMessage.className = 'chat-message bot';
                 botMessage.innerHTML = `<div class="chat-bubble bot">${response}</div>`;
@@ -560,11 +648,16 @@
                 const options = document.createElement('div');
                 options.className = 'chat-options';
                 options.innerHTML = `
-                    <span class="chat-option" onclick="showResponse('chatbot')">What’s the chatbot price?</span>
-                    <span class="chat-option" onclick="showResponse('videos')">Tell me about video boosts</span>
-                    <span class="chat-option" onclick="showResponse('contact')">How do I contact you?</span>
-                    <span class="chat-option" onclick="showResponse('demo')">Can I get a demo?</span>
-                    <span class="chat-option" onclick="showResponse('live')">Live Chat Support</span>
+                    <span class="chat-option" onclick="showPolicy('services')">Services & Pricing</span>
+                    <span class="chat-option" onclick="showPolicy('how')">How It Works</span>
+                    <span class="chat-option" onclick="showPolicy('payment')">Payment Terms</span>
+                    <span class="chat-option" onclick="showPolicy('cancellations')">Cancellations</span>
+                    <span class="chat-option" onclick="showPolicy('refunds')">Refunds</span>
+                    <span class="chat-option" onclick="showPolicy('responsibilities')">Your Responsibilities</span>
+                    <span class="chat-option" onclick="showPolicy('commitment')">Our Commitment</span>
+                    <span class="chat-option" onclick="showPolicy('why')">Why Choose ConnectAi?</span>
+                    <span class="chat-option" onclick="showPolicy('changes')">Changes to This Policy</span>
+                    <span class="chat-option" onclick="showResponse('back')">Back to Main Menu</span>
                 `;
                 chatBody.appendChild(options);
 
@@ -578,9 +671,37 @@
                 case 'videos': return 'Tell me about video boosts';
                 case 'contact': return 'How do I contact you?';
                 case 'demo': return 'Can I get a demo?';
+                case 'policy': return 'Store Policy';
                 case 'live': return 'Live Chat Support';
+                case 'back': return 'Back to Main Menu';
                 default: return 'Huh?';
             }
+        }
+
+        function getPolicyText(policy) {
+            switch (policy) {
+                case 'services': return 'Services & Pricing';
+                case 'how': return 'How It Works';
+                case 'payment': return 'Payment Terms';
+                case 'cancellations': return 'Cancellations';
+                case 'refunds': return 'Refunds';
+                case 'responsibilities': return 'Your Responsibilities';
+                case 'commitment': return 'Our Commitment';
+                case 'why': return 'Why Choose ConnectAi?';
+                case 'changes': return 'Changes to This Policy';
+                default: return 'Huh?';
+            }
+        }
+
+        function getDefaultOptions() {
+            return `
+                <span class="chat-option" onclick="showResponse('chatbot')">What’s the chatbot price?</span>
+                <span class="chat-option" onclick="showResponse('videos')">Tell me about video boosts</span>
+                <span class="chat-option" onclick="showResponse('contact')">How do I contact you?</span>
+                <span class="chat-option" onclick="showResponse('demo')">Can I get a demo?</span>
+                <span class="chat-option" onclick="showResponse('policy')">Store Policy</span>
+                <span class="chat-option" onclick="showResponse('live')">Live Chat Support</span>
+            `;
         }
 
         // Toggle Policy Animation
