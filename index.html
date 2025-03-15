@@ -177,8 +177,9 @@
             overflow: hidden;
             transition: max-height 0.5s ease-in-out;
         }
+        /* Removed static max-height from .expanded; handled in JS */
         .policy-section.expanded {
-            max-height: 2000px;
+            /* No static max-height here anymore */
         }
         .policy-section h3 {
             color: #ff3333;
@@ -705,15 +706,19 @@
             `;
         }
 
-        // Toggle Policy Animation
+        // Toggle Policy Animation with Dynamic Height
         document.getElementById('togglePolicy').addEventListener('click', function() {
             const policyContent = document.getElementById('policyContent');
             const button = this;
+
             if (policyContent.classList.contains('expanded')) {
                 policyContent.classList.remove('expanded');
+                policyContent.style.maxHeight = '0';
                 button.textContent = 'Show Policy';
             } else {
                 policyContent.classList.add('expanded');
+                // Set max-height to the full scrollHeight of the content
+                policyContent.style.maxHeight = policyContent.scrollHeight + 'px';
                 button.textContent = 'Hide Policy';
             }
         });
