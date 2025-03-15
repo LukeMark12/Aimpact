@@ -438,6 +438,8 @@
                 <li><strong>Method:</strong> Stripe—secure, fast, USD. You’ll get a sub link (e.g., <a href="#">https://buy.stripe.com/[your-link]</a>).</li>
                 <li><strong>Timing:</strong> Charged monthly on signup date—e.g., sign up March 15, next bill April 15.</li>
                 <li><strong>No Surprises:</strong> What you see ($100, $300, etc.) is what you pay—no setup fees, no add-ons.</li>
+                <li><strong>Payment Policy:</strong> Billing cycles will be notified to you via WhatsApp or email.</li>
+                <li><strong>Late Fees:</strong> New invoices will be sent before the end of each subscription. If not replied to in 48-72 hours, your subscription will end.</li>
             </ul>
             
             <h3>4. Cancellations</h3>
@@ -479,6 +481,9 @@
             
             <h3>9. Changes to This Policy</h3>
             <p>We might tweak this as ConnectAi grows—price shifts, new services. You’ll get a heads-up via email, 30 days before changes hit. Current terms lock till then.</p>
+            
+            <h3>10. Security</h3>
+            <p><strong>Cybersecurity & Access Control Policy:</strong> We will ensure that the data and information you give us stays private between you and us. Unauthorized access and data breaches will be terminated immediately upon notice.</p>
             
             <h3>Questions?</h3>
             <p>Luke (+358415773415) or Snoopy (0417410934)—hit us up. Emails at <a href="mailto:lukemarkflying@gmail.com">lukemarkflying@gmail.com</a> or <a href="mailto:chanyuzhong2008@gmail.com">chanyuzhong2008@gmail.com</a>. Let’s link smart and grow easy.</p>
@@ -571,6 +576,7 @@
                             <span class="chat-option" onclick="showPolicy('commitment')">Our Commitment</span>
                             <span class="chat-option" onclick="showPolicy('why')">Why Choose ConnectAi?</span>
                             <span class="chat-option" onclick="showPolicy('changes')">Changes to This Policy</span>
+                            <span class="chat-option" onclick="showPolicy('security')">Security</span>
                             <span class="chat-option" onclick="showResponse('back')">Back to Main Menu</span>
                         `;
                         break;
@@ -618,7 +624,7 @@
                         response = '2. How It Works:\n- Chatbot: Built in 1-2 days after you send info (hours, menu, etc.), live on your site/socials.\n- Videos: Starts within 7 days—send clips, we draft, you approve, we post at peak times.\n- Free tweaks for updates (new menu, events)—just tell us!';
                         break;
                     case 'payment':
-                        response = '3. Payment Terms:\n- Via Stripe (USD), secure and fast.\n- Charged monthly on signup date (e.g., March 15 → April 15).\n- No surprises: $100, $300, etc. is all you pay—no setup fees or add-ons.';
+                        response = '3. Payment Terms:\n- Via Stripe (USD), secure and fast.\n- Charged monthly on signup date (e.g., March 15 → April 15).\n- No surprises: $100, $300, etc. is all you pay—no setup fees or add-ons.\n- Payment Policy: Billing cycles notified via WhatsApp or email.\n- Late Fees: Invoices sent before subscription ends—if no reply in 48-72 hours, subscription ends.';
                         break;
                     case 'cancellations':
                         response = '4. Cancellations:\n- No lock-in—cancel anytime.\n- Email lukemarkflying@gmail.com or chanyuzhong2008@gmail.com with “cancel my [chatbot/videos].”\n- Stops at month’s end (e.g., cancel March 20, runs till March 31)—no prorated refunds.\n- End early? Subscription runs till month’s end, no refunds!!';
@@ -637,6 +643,9 @@
                         break;
                     case 'changes':
                         response = '9. Changes to This Policy:\n- We might tweak prices or services as we grow—email heads-up 30 days before.\n- Current terms lock till then.';
+                        break;
+                    case 'security':
+                        response = '10. Security:\n- Cybersecurity & Access Control Policy: Your data stays private between you and us. Unauthorized access or breaches? Terminated immediately on notice.';
                         break;
                     default:
                         response = 'Oops, something went wrong. Try again!';
@@ -659,6 +668,7 @@
                     <span class="chat-option" onclick="showPolicy('commitment')">Our Commitment</span>
                     <span class="chat-option" onclick="showPolicy('why')">Why Choose ConnectAi?</span>
                     <span class="chat-option" onclick="showPolicy('changes')">Changes to This Policy</span>
+                    <span class="chat-option" onclick="showPolicy('security')">Security</span>
                     <span class="chat-option" onclick="showResponse('back')">Back to Main Menu</span>
                 `;
                 chatBody.appendChild(options);
@@ -691,6 +701,7 @@
                 case 'commitment': return 'Our Commitment';
                 case 'why': return 'Why Choose ConnectAi?';
                 case 'changes': return 'Changes to This Policy';
+                case 'security': return 'Security';
                 default: return 'Huh?';
             }
         }
