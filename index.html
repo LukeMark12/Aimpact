@@ -177,9 +177,8 @@
             overflow: hidden;
             transition: max-height 0.5s ease-in-out;
         }
-        /* Removed static max-height from .expanded; handled in JS */
         .policy-section.expanded {
-            /* No static max-height here anymore */
+            /* Controlled dynamically via JS */
         }
         .policy-section h3 {
             color: #ff3333;
@@ -446,12 +445,13 @@
                 <li><strong>Flexibility:</strong> No long-term lock-in—cancel anytime.</li>
                 <li><strong>How:</strong> Email <a href="mailto:lukemarkflying@gmail.com">lukemarkflying@gmail.com</a> or <a href="mailto:chanyuzhong2008@gmail.com">chanyuzhong2008@gmail.com</a>—say “cancel my [chatbot/videos].”</li>
                 <li><strong>Timing:</strong> Stops end of current month—e.g., cancel March 20, runs till March 31. No prorated refunds, full month plays out.</li>
+                <li><strong>End of Subscription:</strong> If you want to end before the month’s up, your subscription stays valid till the end of the month. No refunds will be given back!!</li>
             </ul>
             
             <h3>5. Refunds</h3>
             <ul>
                 <li><strong>Policy:</strong> No refunds after service kicks in (chatbot live, videos posted)—we’ll fix any hiccups first.</li>
-                <li><strong>Exceptions:</strong> If we can’t deliver (e.g., tech fails hard, rare as hell), full refund, no questions.</li>
+                <li><strong>Exceptions:</strong> If we can’t deliver (e.g., tech fails—which is very rare!), full refund, no questions.</li>
                 <li><strong>Process:</strong> Email us—money back in 5-10 days via Stripe.</li>
             </ul>
             
@@ -621,10 +621,10 @@
                         response = '3. Payment Terms:\n- Via Stripe (USD), secure and fast.\n- Charged monthly on signup date (e.g., March 15 → April 15).\n- No surprises: $100, $300, etc. is all you pay—no setup fees or add-ons.';
                         break;
                     case 'cancellations':
-                        response = '4. Cancellations:\n- No lock-in—cancel anytime.\n- Email lukemarkflying@gmail.com or chanyuzhong2008@gmail.com with “cancel my [chatbot/videos].”\n- Stops at month’s end (e.g., cancel March 20, runs till March 31)—no prorated refunds.';
+                        response = '4. Cancellations:\n- No lock-in—cancel anytime.\n- Email lukemarkflying@gmail.com or chanyuzhong2008@gmail.com with “cancel my [chatbot/videos].”\n- Stops at month’s end (e.g., cancel March 20, runs till March 31)—no prorated refunds.\n- End early? Subscription runs till month’s end, no refunds!!';
                         break;
                     case 'refunds':
-                        response = '5. Refunds:\n- No refunds after service starts (chatbot live, videos posted)—we’ll fix issues first.\n- Exception: If we can’t deliver (e.g., major tech fail), full refund, no hassle.\n- Email us—money back in 5-10 days via Stripe.';
+                        response = '5. Refunds:\n- No refunds after service starts (chatbot live, videos posted)—we’ll fix issues first.\n- Exception: If we can’t deliver (e.g., tech fails—which is very rare!), full refund, no hassle.\n- Email us—money back in 5-10 days via Stripe.';
                         break;
                     case 'responsibilities':
                         response = '6. Your Responsibilities:\n- Chatbot: Send us basics (hours, menu, rates). Updates? Free, just tell us.\n- Videos: Shoot raw clips (30 secs-1 min, phone’s fine)—send via Google Drive/WhatsApp.\n- Approve video drafts quick to keep it rolling.';
@@ -717,7 +717,6 @@
                 button.textContent = 'Show Policy';
             } else {
                 policyContent.classList.add('expanded');
-                // Set max-height to the full scrollHeight of the content
                 policyContent.style.maxHeight = policyContent.scrollHeight + 'px';
                 button.textContent = 'Hide Policy';
             }
